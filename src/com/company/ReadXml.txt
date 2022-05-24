@@ -1,0 +1,22 @@
+package com.company;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+
+import java.io.File;
+
+public class ReadXmlFile {
+    public static void main(String[] args) {
+        Persons persons = null;
+        JAXBContext jaxbContext   = null;
+        try {
+            jaxbContext = JAXBContext.newInstance( Persons.class );
+            Unmarshaller jaxbUnmarshaller   = jaxbContext.createUnmarshaller();
+            persons = (Persons) jaxbUnmarshaller.unmarshal(new File("src/com/company/data/data.xml"));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        persons.getPersons().stream().forEach(System.out::println);
+    }
+}
